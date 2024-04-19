@@ -27,6 +27,7 @@ export const App: FC = () => {
 
   return (
     <Calendar
+      allow={["present"]}
       popover={
         <MoodPopover
           onClick={(mood, context) => {

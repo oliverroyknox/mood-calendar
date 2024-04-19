@@ -10,6 +10,7 @@ import { Header } from "./header";
 const DAY_NAMES = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 interface CalendarProps {
+  allow?: Array<"future" | "present" | "past">;
   popover?: JSX.Element;
   renderData?: (date: IndexedDate) => JSX.Element | null;
   onClick?: (date: IndexedDate) => void;
@@ -17,6 +18,7 @@ interface CalendarProps {
 }
 
 export const Calendar: FC<CalendarProps> = ({
+  allow = ["future", "present", "past"],
   popover,
   renderData,
   onClick,
@@ -64,8 +66,27 @@ export const Calendar: FC<CalendarProps> = ({
       })}
       {cells.map((item, index) => {
         const dayIndex = index + 1 - pad;
-        const date = moment(month).set("date", dayIndex);
-        const disabled = !item || date.isAfter(moment());
+
+        function isAllowed() {
+          const isFutureDisabled =
+            !allow.includes("future") && moment().date() < dayIndex;
+          const isPresentDisabled =
+            !allow.includes("present") && moment().date() === dayIndex;
+          const isPastDisabled =
+            !allow.includes("past") && moment().date() > dayIndex;
+
+          if (dayIndex === 19) {
+            console.log({
+              isFutureDisabled,
+              isPresentDisabled,
+              isPastDisabled,
+            });
+          }
+
+          return !isFutureDisabled && !isPresentDisabled && !isPastDisabled;
+        }
+
+        const disabled = !item || !isAllowed();
 
         const data = {
           day: dayIndex,
