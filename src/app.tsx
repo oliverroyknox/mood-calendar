@@ -1,3 +1,4 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import { useToast } from "@chakra-ui/react";
 import { Calendar } from "@components/calendar";
 import { Indicator } from "@components/indicator";
@@ -13,6 +14,7 @@ export const App: FC = () => {
   const [year, setYear] = useState(moment().year());
 
   const toast = useToast();
+  const { loginWithPopup, isAuthenticated } = useAuth0();
 
   const { data } = useGetMoodMap(year);
   const { mutate } = usePutMoodMap(year, undefined, (error) => {
@@ -27,6 +29,10 @@ export const App: FC = () => {
 
   return (
     <Calendar
+      onClick={() => {
+        if (isAuthenticated) return;
+        loginWithPopup();
+      }}
       allow={["present"]}
       popover={
         <MoodPopover

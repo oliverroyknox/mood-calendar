@@ -75,14 +75,6 @@ export const Calendar: FC<CalendarProps> = ({
           const isPastDisabled =
             !allow.includes("past") && moment().date() > dayIndex;
 
-          if (dayIndex === 19) {
-            console.log({
-              isFutureDisabled,
-              isPresentDisabled,
-              isPastDisabled,
-            });
-          }
-
           return !isFutureDisabled && !isPresentDisabled && !isPastDisabled;
         }
 
