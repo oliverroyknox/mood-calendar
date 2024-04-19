@@ -1,19 +1,21 @@
 import { SimpleGrid, Text } from "@chakra-ui/react";
 import moment from "moment";
-import { FC, useMemo, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 
 import { DataCell } from "./data-cell";
 import { HeadingCell } from "./heading-cell";
 import { Header } from "./header";
+import { IndexedDate } from "@custom-types/date";
 
 const DAY_NAMES = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 interface CalendarProps {
   popover?: JSX.Element;
-  onClick?: (date: string) => void;
+  onClick?: (date: IndexedDate) => void;
+  onChange?: (date: Omit<IndexedDate, "day">) => void;
 }
 
-export const Calendar: FC<CalendarProps> = ({ popover, onClick }) => {
+export const Calendar: FC<CalendarProps> = ({ popover, onClick, onChange }) => {
   const [month, setMonth] = useState<string>(moment().toISOString());
 
   const days = useMemo(() => {
@@ -37,6 +39,13 @@ export const Calendar: FC<CalendarProps> = ({ popover, onClick }) => {
     return [...new Array(pad).fill(null), ...days];
   }, [days, pad]);
 
+  useEffect(() => {
+    if (!onChange) return;
+
+    const parsed = moment(month);
+    onChange({ month: parsed.get("month") + 1, year: parsed.get("year") });
+  }, [month, onChange]);
+
   return (
     <SimpleGrid columns={7} height="full" width="full">
       <Header month={month} setMonth={setMonth} />
@@ -52,12 +61,18 @@ export const Calendar: FC<CalendarProps> = ({ popover, onClick }) => {
         const date = moment(month).set("date", dayIndex);
         const disabled = !item || date.isAfter(moment());
 
+        const data = {
+          day: dayIndex,
+          month: moment(month).get("month") + 1,
+          year: moment(month).get("year"),
+        };
+
         return (
           <DataCell
             key={index}
             disabled={disabled}
             popover={popover}
-            data={date.toISOString()}
+            data={data}
             onClick={onClick}
           >
             {item ? <Text fontWeight={600}>{dayIndex}</Text> : null}

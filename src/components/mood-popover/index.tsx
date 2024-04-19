@@ -11,10 +11,15 @@ import {
 } from "@chakra-ui/react";
 import { Indicator } from "@components/indicator";
 import { Pressable } from "@components/pressable";
-import { Mood } from "@enums/mood";
+import { Mood } from "@custom-types/mood";
 import { FC, PropsWithChildren } from "react";
 
 import { CloseButton } from "./close-button";
+
+interface MoodPopoverProps extends PropsWithChildren {
+  context?: Record<string, unknown>;
+  onClick?: (mood: Mood, context?: Record<string, unknown>) => void;
+}
 
 const style = {
   option: {
@@ -24,12 +29,16 @@ const style = {
   },
 };
 
-export const MoodPopover: FC<PropsWithChildren> = ({ children }) => {
+export const MoodPopover: FC<MoodPopoverProps> = ({
+  context,
+  onClick,
+  children,
+}) => {
   return (
     <Popover>
       {({ onClose }) => {
-        const onClick = (mood: Mood) => {
-          console.log({ mood });
+        const handleClick = (mood: Mood) => {
+          onClick?.(mood, context);
           onClose();
         };
 
@@ -63,7 +72,7 @@ export const MoodPopover: FC<PropsWithChildren> = ({ children }) => {
                   <Pressable
                     as={HStack}
                     {...style.option}
-                    onClick={() => onClick(Mood.HAPPY)}
+                    onClick={() => handleClick(Mood.HAPPY)}
                   >
                     <Text>Happy</Text>
                     <Indicator background="green.400" />
@@ -71,7 +80,7 @@ export const MoodPopover: FC<PropsWithChildren> = ({ children }) => {
                   <Pressable
                     as={HStack}
                     {...style.option}
-                    onClick={() => onClick(Mood.FINE)}
+                    onClick={() => handleClick(Mood.FINE)}
                   >
                     <Text>Fine</Text>
                     <Indicator background="yellow.400" />
@@ -79,7 +88,7 @@ export const MoodPopover: FC<PropsWithChildren> = ({ children }) => {
                   <Pressable
                     as={HStack}
                     {...style.option}
-                    onClick={() => onClick(Mood.SAD)}
+                    onClick={() => handleClick(Mood.SAD)}
                   >
                     <Text>Sad</Text>
                     <Indicator background="red.400" />

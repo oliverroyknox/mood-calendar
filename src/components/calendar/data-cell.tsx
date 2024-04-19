@@ -17,7 +17,7 @@ export const DataCell = <T,>({
 }: PropsWithChildren<DataCellProps<T>>) => {
   function withPopover(element: JSX.Element) {
     if (!popover || disabled) return element;
-    return cloneElement(popover, { children: element });
+    return cloneElement(popover, { context: data, children: element });
   }
 
   return (

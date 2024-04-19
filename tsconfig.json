@@ -21,9 +21,9 @@
     "noFallthroughCasesInSwitch": true,
 
     "paths": {
+      "@api/*": ["./src/api/*"],
       "@components/*": ["./src/components/*"],
-      "@enums/*": ["./src/enums/*"],
-      "@types/*": ["./src/types/*"]
+      "@custom-types/*": ["./src/custom-types/*"]
     }
   },
   "include": ["src"],
