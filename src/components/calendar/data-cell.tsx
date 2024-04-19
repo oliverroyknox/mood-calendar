@@ -21,11 +21,19 @@ export const DataCell = <T,>({
   }
 
   return (
-    <Center height="full" width="full" paddingY={8} borderColor="gray.200">
+    <Center
+      height="full"
+      width="full"
+      paddingY={8}
+      borderColor="gray.200"
+      position="relative"
+    >
       {withPopover(
         <Center
           flex={0.25}
           aspectRatio={1}
+          minWidth={8}
+          minHeight={8}
           transition="background 300ms ease"
           borderRadius="50%"
           userSelect="none"

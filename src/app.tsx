@@ -1,8 +1,9 @@
 import { useToast } from "@chakra-ui/react";
 import { Calendar } from "@components/calendar";
+import { Indicator } from "@components/indicator";
 import { MoodPopover } from "@components/mood-popover";
 import { IndexedDate } from "@custom-types/date";
-import { MoodMap } from "@custom-types/mood";
+import { Mood, MoodMap } from "@custom-types/mood";
 import { usePutMoodMap } from "@hooks/mutations";
 import { useGetMoodMap } from "@hooks/queries";
 import moment from "moment";
@@ -44,6 +45,26 @@ export const App: FC = () => {
           }}
         />
       }
+      renderData={(date) => {
+        const mood = data?.[date.month]?.[date.day];
+
+        if (mood === undefined) return null;
+
+        const colors = {
+          [Mood.HAPPY]: "green.400",
+          [Mood.FINE]: "yellow.400",
+          [Mood.SAD]: "red.400",
+        }[mood];
+
+        return (
+          <Indicator
+            position="absolute"
+            pointerEvents="none"
+            bottom="10%"
+            background={colors}
+          />
+        );
+      }}
       onChange={({ year }) => setYear(year)}
     />
   );

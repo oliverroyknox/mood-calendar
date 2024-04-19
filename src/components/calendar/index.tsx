@@ -1,21 +1,27 @@
 import { SimpleGrid, Text } from "@chakra-ui/react";
+import { IndexedDate } from "@custom-types/date";
 import moment from "moment";
 import { FC, useEffect, useMemo, useState } from "react";
 
 import { DataCell } from "./data-cell";
 import { HeadingCell } from "./heading-cell";
 import { Header } from "./header";
-import { IndexedDate } from "@custom-types/date";
 
 const DAY_NAMES = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 interface CalendarProps {
   popover?: JSX.Element;
+  renderData?: (date: IndexedDate) => JSX.Element | null;
   onClick?: (date: IndexedDate) => void;
   onChange?: (date: Omit<IndexedDate, "day">) => void;
 }
 
-export const Calendar: FC<CalendarProps> = ({ popover, onClick, onChange }) => {
+export const Calendar: FC<CalendarProps> = ({
+  popover,
+  renderData,
+  onClick,
+  onChange,
+}) => {
   const [month, setMonth] = useState<string>(moment().toISOString());
 
   const days = useMemo(() => {
@@ -76,6 +82,7 @@ export const Calendar: FC<CalendarProps> = ({ popover, onClick, onChange }) => {
             onClick={onClick}
           >
             {item ? <Text fontWeight={600}>{dayIndex}</Text> : null}
+            {renderData?.(data)}
           </DataCell>
         );
       })}
