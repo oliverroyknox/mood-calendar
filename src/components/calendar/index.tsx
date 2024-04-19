@@ -9,10 +9,11 @@ import { Header } from "./header";
 const DAY_NAMES = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 interface CalendarProps {
-  onClick: (date: string) => void;
+  popover?: JSX.Element;
+  onClick?: (date: string) => void;
 }
 
-export const Calendar: FC<CalendarProps> = ({ onClick }) => {
+export const Calendar: FC<CalendarProps> = ({ popover, onClick }) => {
   const [month, setMonth] = useState<string>(moment().toISOString());
 
   const days = useMemo(() => {
@@ -55,6 +56,7 @@ export const Calendar: FC<CalendarProps> = ({ onClick }) => {
           <DataCell
             key={index}
             disabled={disabled}
+            popover={popover}
             data={date.toISOString()}
             onClick={onClick}
           >
