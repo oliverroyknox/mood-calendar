@@ -1,14 +1,23 @@
 import {
+  DynamoDB,
   GetItemCommand,
   GetItemCommandInput,
   GetItemCommandOutput,
+  PutItemCommand,
+  PutItemCommandInput,
 } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import { MoodMap } from "@custom-types/mood";
 import camelCase from "camelcase-keys";
 import { CamelCasedProperties } from "type-fest";
 
-import { client } from "./client";
+export const client = new DynamoDB({
+  region: "eu-west-2",
+  credentials: {
+    accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
+    secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
+  },
+});
 
 export async function getMoodMap(year: MoodMap["year"]) {
   const input: GetItemCommandInput = {
@@ -33,4 +42,15 @@ export async function getMoodMap(year: MoodMap["year"]) {
           : undefined,
       };
     });
+}
+
+export async function putMoodMap(map: MoodMap) {
+  const input: PutItemCommandInput = {
+    TableName: "mood-calendar",
+    Item: marshall(map),
+  };
+
+  const putItemCommand = new PutItemCommand(input);
+
+  return client.send(putItemCommand);
 }
