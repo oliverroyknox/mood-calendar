@@ -10,7 +10,7 @@ import { useGetMoodMap } from "@hooks/queries";
 import moment from "moment";
 import { FC, useState } from "react";
 
-export const App: FC = () => {
+export const CalendarPage: FC = () => {
   const [year, setYear] = useState(moment().year());
 
   const toast = useToast();

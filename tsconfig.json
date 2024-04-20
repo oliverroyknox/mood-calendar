@@ -22,9 +22,11 @@
 
     "paths": {
       "@api/*": ["./src/api/*"],
+      "@assets/*": ["./src/assets/*"],
       "@components/*": ["./src/components/*"],
       "@custom-types/*": ["./src/custom-types/*"],
-      "@hooks/*": ["./src/hooks/*"]
+      "@hooks/*": ["./src/hooks/*"],
+      "@pages/*": ["./src/pages/*"]
     }
   },
   "include": ["src"],
