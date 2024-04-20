@@ -1,30 +1,58 @@
-# React + TypeScript + Vite
+# Mood Calendar
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Mood calendar icon](public/mood-calendar.png)
 
-Currently, two official plugins are available:
+[mood-calendar.knox.uk.com](https://mood-calendar.knox.uk.com)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Description
 
-## Expanding the ESLint configuration
+A calendar to track your mood over time.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+The app is built on a custom calendar component, using `moment` to handle date parsing and validation, with [AWS DynamoDB](https://aws.amazon.com/dynamodb) and [Auth0](https://auth0.com) integration.
 
-- Configure the top-level `parserOptions` property like this:
+## Scripts
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+_The following scripts are available in [package.json](./package.json)_
+
+**To start the application**
+
+```bash
+npm run dev
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+**To build the application**
+
+```bash
+npm run build
+```
+
+Builds a minified bundle for production.
+Requires environment variables to be set
+
+- `VITE_AWS_ACCESS_KEY_ID`
+- `VITE_AWS_SECRET_ACCESS_KEY`
+- `VITE_AUTH0_CLIENT_ID`
+- `VITE_AUTH0_DOMAIN`
+
+**To manually deploy the application to an S3 bucket**
+
+```bash
+npm run deploy
+```
+
+Requires AWS credentials to be set
+
+- `AWS_SECRET_KEY_ID`
+- `AWS_SECRET_ACCESS_KEY`
+
+**To invalidate the CloudFront distribution**
+
+```bash
+npm run invalidate
+```
+
+After uploading new artifacts to S3, the CloudFront distribution needs to be invalidated in order for the latest changes to be served.
+
+## Changes
+
+Pushing to main will run a custom [GitHub action](.github/workflows/main.yml) to build the application, deploy it to S3 and invalidate the CloudFront distribution.
