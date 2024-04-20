@@ -6,7 +6,13 @@ export const PageLayout: FC<PropsWithChildren> = ({ children }) => {
   return (
     <VStack spacing={0} height="100vh" width="100vw">
       <Header />
-      <Box height="100%" width="100%" paddingX={4} overflow="auto">
+      <Box
+        height="100%"
+        width="100%"
+        paddingX={4}
+        marginBottom={4}
+        overflowX="hidden"
+      >
         <Fade
           in
           unmountOnExit

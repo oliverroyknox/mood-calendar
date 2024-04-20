@@ -11,7 +11,6 @@ export const LandingPage: FC = () => {
     <PageLayout>
       <Center height="100%" width="100%">
         <Button
-          margin={32}
           size="lg"
           borderRadius={32}
           aria-label="Enter the app"

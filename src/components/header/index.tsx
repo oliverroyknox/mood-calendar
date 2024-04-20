@@ -1,9 +1,11 @@
 import logo from "@assets/mood-calendar.png";
 import { HStack, Heading, Image } from "@chakra-ui/react";
 import { FC } from "react";
+import { useErrorBoundary } from "react-error-boundary";
 import { useNavigate } from "react-router-dom";
 
 export const Header: FC = () => {
+  const { resetBoundary } = useErrorBoundary();
   const navigate = useNavigate();
 
   return (
@@ -21,7 +23,10 @@ export const Header: FC = () => {
         alt="Mood calendar"
         boxSize={12}
         cursor="pointer"
-        onClick={() => navigate("/")}
+        onClick={() => {
+          resetBoundary();
+          navigate("/");
+        }}
       />
     </HStack>
   );
