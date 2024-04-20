@@ -2,6 +2,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useToast } from "@chakra-ui/react";
 import { Calendar } from "@components/calendar";
 import { Indicator } from "@components/indicator";
+import { PageLayout } from "@components/layout";
 import { MoodPopover } from "@components/mood-popover";
 import { IndexedDate } from "@custom-types/date";
 import { Mood, MoodMap } from "@custom-types/mood";
@@ -28,51 +29,53 @@ export const CalendarPage: FC = () => {
   });
 
   return (
-    <Calendar
-      onClick={() => {
-        if (isAuthenticated) return;
-        loginWithPopup();
-      }}
-      allow={["present"]}
-      popover={
-        <MoodPopover
-          onClick={(mood, context) => {
-            const { day, month, year } = context as IndexedDate;
+    <PageLayout>
+      <Calendar
+        onClick={() => {
+          if (isAuthenticated) return;
+          loginWithPopup();
+        }}
+        allow={["present"]}
+        popover={
+          <MoodPopover
+            onClick={(mood, context) => {
+              const { day, month, year } = context as IndexedDate;
 
-            const moodMap: MoodMap = {
-              year,
-              ...data,
-              [month]: {
-                ...data?.[month],
-                [day]: mood,
-              },
-            };
+              const moodMap: MoodMap = {
+                year,
+                ...data,
+                [month]: {
+                  ...data?.[month],
+                  [day]: mood,
+                },
+              };
 
-            mutate(moodMap);
-          }}
-        />
-      }
-      renderData={(date) => {
-        const mood = data?.[date.month]?.[date.day];
-
-        if (mood === undefined) return null;
-
-        const colors = {
-          [Mood.HAPPY]: "green.400",
-          [Mood.FINE]: "yellow.400",
-          [Mood.SAD]: "red.400",
-        }[mood];
-
-        return (
-          <Indicator
-            position="absolute"
-            pointerEvents="none"
-            bottom="10%"
-            background={colors}
+              mutate(moodMap);
+            }}
           />
-        );
-      }}
-      onChange={({ year }) => setYear(year)}
-    />
+        }
+        renderData={(date) => {
+          const mood = data?.[date.month]?.[date.day];
+
+          if (mood === undefined) return null;
+
+          const colors = {
+            [Mood.HAPPY]: "green.400",
+            [Mood.FINE]: "yellow.400",
+            [Mood.SAD]: "red.400",
+          }[mood];
+
+          return (
+            <Indicator
+              position="absolute"
+              pointerEvents="none"
+              bottom="10%"
+              background={colors}
+            />
+          );
+        }}
+        onChange={({ year }) => setYear(year)}
+      />
+    </PageLayout>
   );
 };

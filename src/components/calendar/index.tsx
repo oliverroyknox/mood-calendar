@@ -55,7 +55,7 @@ export const Calendar: FC<CalendarProps> = ({
   }, [month, onChange]);
 
   return (
-    <SimpleGrid columns={7}>
+    <SimpleGrid columns={7} height="100%" width="100%">
       <Header month={month} setMonth={setMonth} />
       {DAY_NAMES.map((day) => {
         return (
