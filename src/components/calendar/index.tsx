@@ -67,24 +67,33 @@ export const Calendar: FC<CalendarProps> = ({
       {cells.map((item, index) => {
         const dayIndex = index + 1 - pad;
 
-        function isAllowed() {
-          const isFutureDisabled =
-            !allow.includes("future") && moment().date() < dayIndex;
-          const isPresentDisabled =
-            !allow.includes("present") && moment().date() === dayIndex;
-          const isPastDisabled =
-            !allow.includes("past") && moment().date() > dayIndex;
-
-          return !isFutureDisabled && !isPresentDisabled && !isPastDisabled;
-        }
-
-        const disabled = !item || !isAllowed();
-
         const data = {
           day: dayIndex,
           month: moment(month).get("month") + 1,
           year: moment(month).get("year"),
         };
+
+        function isAllowed() {
+          const current = moment(
+            `${data.year}-${data.month}-${data.day}`
+          ).startOf("day");
+
+          const disabled = {
+            future:
+              !allow.includes("future") &&
+              moment().startOf("day").isBefore(current),
+            present:
+              !allow.includes("present") &&
+              moment().startOf("day").isSame(current),
+            past:
+              !allow.includes("past") &&
+              moment().startOf("day").isAfter(current),
+          };
+
+          return !disabled.future && !disabled.present && !disabled.past;
+        }
+
+        const disabled = !item || !isAllowed();
 
         return (
           <DataCell
