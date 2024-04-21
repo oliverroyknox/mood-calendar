@@ -21,7 +21,6 @@ export const ErrorPage: FC = () => {
         <Text>Oh no! Something went wrong.</Text>
         <Button
           size="lg"
-          borderRadius={32}
           rightIcon={<RepeatIcon />}
           onClick={() => {
             resetBoundary();
