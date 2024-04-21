@@ -46,7 +46,9 @@ export const Header: FC = () => {
           position="absolute"
           right={isLargerThan800 ? 8 : 2}
           rightIcon={<ExternalLinkIcon />}
-          onClick={() => logout()}
+          onClick={() =>
+            logout({ logoutParams: { returnTo: window.location.origin } })
+          }
         >
           Logout
         </Button>
