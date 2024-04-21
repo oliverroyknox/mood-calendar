@@ -1,4 +1,4 @@
-import { SimpleGrid, Text } from "@chakra-ui/react";
+import { Grid, Text } from "@chakra-ui/react";
 import { IndexedDate } from "@custom-types/date";
 import moment from "moment";
 import { FC, useEffect, useMemo, useState } from "react";
@@ -55,7 +55,12 @@ export const Calendar: FC<CalendarProps> = ({
   }, [month, onChange]);
 
   return (
-    <SimpleGrid columns={7} height="100%" width="100%">
+    <Grid
+      templateColumns="repeat(7, 1fr)"
+      autoRows="1fr"
+      height="100%"
+      width="100%"
+    >
       <Header month={month} setMonth={setMonth} />
       {DAY_NAMES.map((day) => {
         return (
@@ -108,6 +113,6 @@ export const Calendar: FC<CalendarProps> = ({
           </DataCell>
         );
       })}
-    </SimpleGrid>
+    </Grid>
   );
 };

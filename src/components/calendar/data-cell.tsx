@@ -1,4 +1,4 @@
-import { Center } from "@chakra-ui/react";
+import { Center, GridItem } from "@chakra-ui/react";
 import { PropsWithChildren, cloneElement } from "react";
 
 interface DataCellProps<T> {
@@ -21,12 +21,13 @@ export const DataCell = <T,>({
   }
 
   return (
-    <Center
+    <GridItem
+      as={Center}
       height="full"
       width="full"
-      paddingY={8}
       borderColor="gray.200"
       position="relative"
+      rowSpan={2}
     >
       {withPopover(
         <Center
@@ -46,6 +47,6 @@ export const DataCell = <T,>({
           {children}
         </Center>
       )}
-    </Center>
+    </GridItem>
   );
 };

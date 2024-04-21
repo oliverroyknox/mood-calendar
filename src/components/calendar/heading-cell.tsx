@@ -1,10 +1,10 @@
-import { Center } from "@chakra-ui/react";
+import { Center, GridItem } from "@chakra-ui/react";
 import { FC, PropsWithChildren } from "react";
 
 export const HeadingCell: FC<PropsWithChildren> = ({ children }) => {
   return (
-    <Center flex={1} paddingY={8}>
+    <GridItem as={Center} height="100%">
       {children}
-    </Center>
+    </GridItem>
   );
 };
