@@ -11,40 +11,32 @@ interface HeaderProps {
 export const Header: FC<HeaderProps> = ({ month, setMonth }) => {
   return (
     <Fragment>
-      <GridItem as={Center} colSpan={1} paddingY={8}>
-        <Center flex={0.25} aspectRatio={1}>
-          <IconButton
-            variant="ghost"
-            height="full"
-            width="full"
-            borderRadius="50%"
-            aria-label="Go back a month"
-            icon={<ArrowBackIcon />}
-            onClick={() => {
-              setMonth((month) =>
-                moment(month).subtract(1, "month").toISOString()
-              );
-            }}
-          />
-        </Center>
+      <GridItem as={Center} colSpan={1} height="100%">
+        <IconButton
+          variant="ghost"
+          size="lg"
+          aria-label="Go back a month"
+          icon={<ArrowBackIcon />}
+          onClick={() => {
+            setMonth((month) =>
+              moment(month).subtract(1, "month").toISOString()
+            );
+          }}
+        />
       </GridItem>
-      <GridItem as={Center} colSpan={5} paddingY={8}>
+      <GridItem as={Center} colSpan={5} height="100%">
         <Text fontWeight={800}>{moment(month).format("MMMM yyyy")}</Text>
       </GridItem>
-      <GridItem as={Center} colSpan={1} paddingY={8}>
-        <Center flex={0.25} aspectRatio={1}>
-          <IconButton
-            variant="ghost"
-            height="full"
-            width="full"
-            borderRadius="50%"
-            aria-label="Go forward a month"
-            icon={<ArrowForwardIcon />}
-            onClick={() => {
-              setMonth((month) => moment(month).add(1, "month").toISOString());
-            }}
-          />
-        </Center>
+      <GridItem as={Center} colSpan={1} height="100%">
+        <IconButton
+          variant="ghost"
+          size="lg"
+          aria-label="Go forward a month"
+          icon={<ArrowForwardIcon />}
+          onClick={() => {
+            setMonth((month) => moment(month).add(1, "month").toISOString());
+          }}
+        />
       </GridItem>
     </Fragment>
   );

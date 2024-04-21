@@ -1,4 +1,4 @@
-import { SimpleGrid, Text } from "@chakra-ui/react";
+import { Grid, Text } from "@chakra-ui/react";
 import { IndexedDate } from "@custom-types/date";
 import moment from "moment";
 import { FC, useEffect, useMemo, useState } from "react";
@@ -11,6 +11,7 @@ const DAY_NAMES = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 interface CalendarProps {
   allow?: Array<"future" | "present" | "past">;
+  highlight?: string;
   popover?: JSX.Element;
   renderData?: (date: IndexedDate) => JSX.Element | null;
   onClick?: (date: IndexedDate) => void;
@@ -19,6 +20,7 @@ interface CalendarProps {
 
 export const Calendar: FC<CalendarProps> = ({
   allow = ["future", "present", "past"],
+  highlight,
   popover,
   renderData,
   onClick,
@@ -55,7 +57,12 @@ export const Calendar: FC<CalendarProps> = ({
   }, [month, onChange]);
 
   return (
-    <SimpleGrid columns={7} height="100%" width="100%">
+    <Grid
+      templateColumns="repeat(7, 1fr)"
+      autoRows="1fr"
+      height="100%"
+      width="100%"
+    >
       <Header month={month} setMonth={setMonth} />
       {DAY_NAMES.map((day) => {
         return (
@@ -72,12 +79,11 @@ export const Calendar: FC<CalendarProps> = ({
           month: moment(month).get("month") + 1,
           year: moment(month).get("year"),
         };
+        const current = moment(
+          `${data.year}-${data.month}-${data.day}`
+        ).startOf("day");
 
         function isAllowed() {
-          const current = moment(
-            `${data.year}-${data.month}-${data.day}`
-          ).startOf("day");
-
           const disabled = {
             future:
               !allow.includes("future") &&
@@ -94,10 +100,12 @@ export const Calendar: FC<CalendarProps> = ({
         }
 
         const disabled = !item || !isAllowed();
+        const highlighted = moment(highlight).startOf("day").isSame(current);
 
         return (
           <DataCell
             key={index}
+            highlighted={highlighted}
             disabled={disabled}
             popover={popover}
             data={data}
@@ -108,6 +116,6 @@ export const Calendar: FC<CalendarProps> = ({
           </DataCell>
         );
       })}
-    </SimpleGrid>
+    </Grid>
   );
 };

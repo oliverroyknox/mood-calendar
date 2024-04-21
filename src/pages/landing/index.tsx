@@ -12,7 +12,6 @@ export const LandingPage: FC = () => {
       <Center height="100%" width="100%">
         <Button
           size="lg"
-          borderRadius={32}
           aria-label="Enter the app"
           rightIcon={<ArrowForwardIcon />}
           onClick={() => navigate("/calendar")}

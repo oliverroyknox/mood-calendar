@@ -15,7 +15,7 @@ export const CalendarPage: FC = () => {
   const [year, setYear] = useState(moment().year());
 
   const toast = useToast();
-  const { loginWithPopup, isAuthenticated } = useAuth0();
+  const { isAuthenticated } = useAuth0();
 
   const { data } = useGetMoodMap(year);
   const { mutate } = usePutMoodMap(year, undefined, (error) => {
@@ -31,11 +31,8 @@ export const CalendarPage: FC = () => {
   return (
     <PageLayout>
       <Calendar
-        onClick={() => {
-          if (isAuthenticated) return;
-          loginWithPopup();
-        }}
-        allow={["present"]}
+        allow={isAuthenticated ? undefined : []}
+        highlight={moment().toISOString()}
         popover={
           <MoodPopover
             onClick={(mood, context) => {
@@ -69,7 +66,7 @@ export const CalendarPage: FC = () => {
             <Indicator
               position="absolute"
               pointerEvents="none"
-              bottom="10%"
+              bottom={-8}
               background={colors}
             />
           );
