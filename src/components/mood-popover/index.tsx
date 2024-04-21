@@ -6,6 +6,7 @@ import {
   PopoverContent,
   PopoverHeader,
   PopoverTrigger,
+  PopoverProps,
   Text,
   VStack,
 } from "@chakra-ui/react";
@@ -16,7 +17,7 @@ import { FC, PropsWithChildren } from "react";
 
 import { CloseButton } from "./close-button";
 
-interface MoodPopoverProps extends PropsWithChildren {
+interface MoodPopoverProps extends PropsWithChildren<PopoverProps> {
   context?: Record<string, unknown>;
   onClick?: (mood: Mood, context?: Record<string, unknown>) => void;
 }
@@ -33,9 +34,10 @@ export const MoodPopover: FC<MoodPopoverProps> = ({
   context,
   onClick,
   children,
+  ...props
 }) => {
   return (
-    <Popover>
+    <Popover {...props}>
       {({ onClose }) => {
         const handleClick = (mood: Mood) => {
           onClick?.(mood, context);

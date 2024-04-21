@@ -15,7 +15,7 @@ export const CalendarPage: FC = () => {
   const [year, setYear] = useState(moment().year());
 
   const toast = useToast();
-  const { loginWithPopup, isAuthenticated } = useAuth0();
+  const { isAuthenticated } = useAuth0();
 
   const { data } = useGetMoodMap(year);
   const { mutate } = usePutMoodMap(year, undefined, (error) => {
@@ -31,11 +31,7 @@ export const CalendarPage: FC = () => {
   return (
     <PageLayout>
       <Calendar
-        onClick={() => {
-          if (isAuthenticated) return;
-          loginWithPopup();
-        }}
-        allow={["present"]}
+        allow={isAuthenticated ? undefined : []}
         popover={
           <MoodPopover
             onClick={(mood, context) => {
