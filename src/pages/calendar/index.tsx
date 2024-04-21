@@ -69,7 +69,7 @@ export const CalendarPage: FC = () => {
             <Indicator
               position="absolute"
               pointerEvents="none"
-              bottom="10%"
+              bottom={-8}
               background={colors}
             />
           );

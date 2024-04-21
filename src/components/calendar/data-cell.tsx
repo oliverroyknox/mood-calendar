@@ -1,4 +1,4 @@
-import { Center, GridItem } from "@chakra-ui/react";
+import { Button, Center, GridItem } from "@chakra-ui/react";
 import { PropsWithChildren, cloneElement } from "react";
 
 interface DataCellProps<T> {
@@ -25,27 +25,19 @@ export const DataCell = <T,>({
       as={Center}
       height="full"
       width="full"
-      borderColor="gray.200"
       position="relative"
       rowSpan={2}
     >
       {withPopover(
-        <Center
-          flex={0.25}
+        <Button
+          variant="ghost"
+          size="lg"
           aspectRatio={1}
-          minWidth={8}
-          minHeight={8}
-          transition="background 300ms ease"
-          borderRadius="50%"
-          userSelect="none"
-          color={disabled ? "gray" : undefined}
-          cursor={disabled ? undefined : "pointer"}
-          _hover={disabled ? undefined : { background: "gray.100" }}
-          _active={disabled ? undefined : { background: "gray.200" }}
-          onClick={() => (disabled ? null : onClick?.(data))}
+          isDisabled={disabled}
+          onClick={() => onClick?.(data)}
         >
           {children}
-        </Center>
+        </Button>
       )}
     </GridItem>
   );
