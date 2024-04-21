@@ -3,6 +3,7 @@ import { PropsWithChildren, cloneElement } from "react";
 
 interface DataCellProps<T> {
   data: T;
+  highlighted?: boolean;
   disabled?: boolean;
   popover?: JSX.Element;
   onClick?: (data: T) => void;
@@ -10,6 +11,7 @@ interface DataCellProps<T> {
 
 export const DataCell = <T,>({
   data,
+  highlighted,
   disabled,
   popover,
   onClick,
@@ -30,7 +32,8 @@ export const DataCell = <T,>({
     >
       {withPopover(
         <Button
-          variant="ghost"
+          variant={highlighted ? "solid" : "ghost"}
+          colorScheme={highlighted ? "red" : undefined}
           size="lg"
           aspectRatio={1}
           isDisabled={disabled}

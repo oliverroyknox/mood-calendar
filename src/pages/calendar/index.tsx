@@ -32,6 +32,7 @@ export const CalendarPage: FC = () => {
     <PageLayout>
       <Calendar
         allow={isAuthenticated ? undefined : []}
+        highlight={moment().toISOString()}
         popover={
           <MoodPopover
             onClick={(mood, context) => {

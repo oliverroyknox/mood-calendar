@@ -47,21 +47,9 @@ export const MoodPopover: FC<MoodPopoverProps> = ({
         return (
           <>
             <PopoverTrigger>{children}</PopoverTrigger>
-            <PopoverContent
-              marginX={16}
-              border="none"
-              shadow="none"
-              boxShadow="none !important"
-              background="gray.50"
-            >
-              <PopoverArrow
-                css={{
-                  "--popper-arrow-bg": "var(--chakra-colors-gray-50)",
-                  "--popper-arrow-shadow-color":
-                    "var(--chakra-colors-gray-100)",
-                }}
-              />
-              <PopoverHeader border="none" paddingBottom={0}>
+            <PopoverContent marginX={16}>
+              <PopoverArrow />
+              <PopoverHeader>
                 <HStack justifyContent="space-between">
                   <Text paddingLeft={2} fontWeight={600}>
                     Choose your mood
@@ -69,7 +57,7 @@ export const MoodPopover: FC<MoodPopoverProps> = ({
                   <CloseButton />
                 </HStack>
               </PopoverHeader>
-              <PopoverBody paddingX={4} paddingBottom={4}>
+              <PopoverBody paddingX={4}>
                 <VStack alignItems="flex-start" spacing={0}>
                   <Pressable
                     as={HStack}
